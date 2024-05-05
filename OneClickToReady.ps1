@@ -57,34 +57,20 @@ foreach ($uygulama in $uygulamalar) {
     winget install $uygulama --accept-source-agreements --accept-package-agreements -h
 }
 
-# Gereksiz uygulamaları kaldıran Scripti indir
+# Gereksiz uygulamaları kaldıran Scripti pause olmadan çalıştırır
 $scriptContent = Invoke-RestMethod "https://raw.githubusercontent.com/GokhanTurk/UninstallBloatware/main/uninstall.ps1"
-
-# 'pause' komutunu kaldır
 $scriptContent = $scriptContent -replace 'pause', ''
-
-# Düzenlenmiş scripti çalıştır
 Invoke-Expression $scriptContent
 
-# GitHub'dan Terminal_Logo klasörünü indirme ve Pictures klasörüne çıkartma
-$githubUrl = "https://github.com/GokhanTurk/Windows11/raw/main/Assets/Terminal_Logo.zip"  # GitHub URL'si, gerçek bilgilerle değiştirilmelidir.
+# GitHub'dan BJK(Terminal).png dosyasını indirme ve Pictures klasörüne kaydetme
+$githubUrl = "https://raw.githubusercontent.com/GokhanTurk/Windows11/main/Assets/Terminal_Logo/BJK(Terminal).png"
 $destinationPath = [System.Environment]::GetFolderPath('MyPictures')
-$localZipPath = Join-Path -Path $destinationPath -ChildPath "Terminal_Logo.zip"
-
-# GitHub URL'sinden zip dosyasını indir
-Invoke-RestMethod -Uri $githubUrl -OutFile $localZipPath
-
-# Zip dosyasını aç
-Expand-Archive -Path $localZipPath -DestinationPath $destinationPath -Force
-
-# İndirilen zip dosyasını sil
-Remove-Item -Path $localZipPath -Force
+$localImagePath = Join-Path -Path $destinationPath -ChildPath "BJK(Terminal).png"
+Invoke-RestMethod -Uri $githubUrl -OutFile $localImagePath
 
 # Windows Terminal ayarlarını GitHub'dan indirme ve uygulama
-$settingsUrl = "https://github.com/GokhanTurk/Settings/WindowsTerminal/settings.json"  # GitHub URL'si, gerçek bilgilerle değiştirilmelidir.
+$settingsUrl = "https://raw.githubusercontent.com/GokhanTurk/Settings/main/WindowsTerminal/settings.json"
 $terminalSettingsPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
-
-# GitHub URL'sinden settings.json dosyasını indir
 Invoke-RestMethod -Uri $settingsUrl -OutFile $terminalSettingsPath
 
 Set-Location "$env:userprofile\Desktop\"
