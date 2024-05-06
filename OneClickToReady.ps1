@@ -3,13 +3,8 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     Start-Process -Verb runas -FilePath powershell.exe -ArgumentList "iwr -useb https://raw.githubusercontent.com/GokhanTurk/Windows11/OneClickToReady.ps1 | iex"
     break
 }
-Write-Host "Checking if Winget is Installed..."
-if (Test-Path ~\AppData\Local\Microsoft\WindowsApps\winget.exe) {
-    Write-Host "Winget Already Installed"
-}
-else {
-    Invoke-RestMethod https://raw.githubusercontent.com/GokhanTurk/FormatSonrasi.bat/main/SilentWinget.ps1 | Invoke-Expression
-}
+# Winget installation
+Invoke-RestMethod https://raw.githubusercontent.com/GokhanTurk/FormatSonrasi.bat/main/SilentWinget.ps1 | Invoke-Expression
 function Set-Registry {
     [CmdletBinding()] Param([string]$registryPath, [string]$registryName, [string]$registryValue)
     # Check if registry value exists
@@ -56,7 +51,7 @@ taskkill /f /im explorer.exe
 Start-Process explorer.exe
 $uygulamalar = @(
     'Microsoft.PowerShell',
-    'CursorAI.CursorAI',
+    'CursorAI,Inc.Cursor',
     'Mozilla.Firefox',
     'Git.Git',
     'GitHub.cli',
@@ -117,6 +112,7 @@ foreach ($fontFile in $fontFiles) {
 Remove-Item -Path $zipFile -Force
 Remove-Item -Path $extractPath -Recurse -Force
 
-Set-Location "$env:userprofile\Desktop\"
-Remove-Item "Microsoft Edge.lnk" -ErrorAction SilentlyContinue
+Remove-Item "$env:userprofile\Desktop\Microsoft Edge.lnk" -ErrorAction SilentlyContinue
+Remove-Item "$env:PUBLIC\Desktop\Microsoft Edge.lnk" -ErrorAction SilentlyContinue
+
 pause
