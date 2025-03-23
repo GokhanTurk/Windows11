@@ -4,7 +4,7 @@ if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]:
     break
 }
 # Winget installation
-Invoke-RestMethod https://raw.githubusercontent.com/GokhanTurk/FormatSonrasi.bat/main/SilentWinget.ps1 | Invoke-Expression
+#Invoke-RestMethod https://raw.githubusercontent.com/GokhanTurk/FormatSonrasi.bat/main/SilentWinget.ps1 | Invoke-Expression
 function Set-Registry {
     [CmdletBinding()] Param([string]$registryPath, [string]$registryName, [string]$registryValue)
     # Check if registry value exists
@@ -51,12 +51,7 @@ taskkill /f /im explorer.exe
 Start-Process explorer.exe
 $uygulamalar = @(
     'Microsoft.PowerShell',
-    'CursorAI,Inc.Cursor',
     'Mozilla.Firefox',
-    'Git.Git',
-    'GitHub.cli',
-    'Python.Python.3',
-    'Tonec.InternetDownloadManager',
     'Microsoft.PowerToys'
 )
 
